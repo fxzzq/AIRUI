@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-autowire="byName">
+
+	<bean id="loginAction" class="com.mxp.action.LoginAction" scope="request"></bean>
+	<bean id="medicineAction" class="com.mxp.action.MedicineAction" scope="request"></bean>
+	<bean id="requireAction" class="com.mxp.action.RequireAction" scope="request"></bean>
+	<bean id="sellDetailAction" class="com.mxp.action.SellDetailAction" scope="request"></bean>
+	<bean id="systemAction" class="com.mxp.action.SystemAction" scope="request"></bean>
+	<bean id="categoryAction" class="com.mxp.action.CategoryAction" scope="request"></bean>
+
+	<bean id="categorySercie" class="com.mxp.service.CategorySercieImp"></bean>
+	<bean id="loginService" class="com.mxp.service.LoginServiceImp"></bean>
+	<bean id="medicineService" class="com.mxp.service.MedicineServiceImp"></bean>
+	<bean id="requireService" class="com.mxp.service.RequireServiceImp"></bean>
+	<bean id="sellDetailService" class="com.mxp.service.SellDetailServiceImp"></bean>
+	<bean id="systemService" class="com.mxp.service.SystemServiceImp"></bean>
+
+	<bean id="baseDao" class="com.mxp.dao.BaseDaoImp"></bean>
+	<bean id="categoryDao" class="com.mxp.dao.CategoryDaoImp"></bean>
+	<bean id="medicineDao" class="com.mxp.dao.MedicineDaoImp"></bean>
+	<bean id="sellDetailDao" class="com.mxp.dao.SellDetailDaoImp"></bean>
+	<bean id="treeDao" class="com.mxp.dao.TreeDaoImp"></bean>
+	<bean id="userDao" class="com.mxp.dao.UserDaoImp"></bean>
+	<bean id="shopCartDao" class="com.mxp.dao.ShopCartDaoImp"></bean>
+	
+	<bean id="loginInterceptor" class="com.mxp.interceptor.LoginInterceptor"></bean>
+	<bean id="systemInterceptor" class="com.mxp.interceptor.SystemInterceptor"></bean>
+</beans>
