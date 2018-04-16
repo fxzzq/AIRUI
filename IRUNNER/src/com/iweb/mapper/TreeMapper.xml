@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iweb.mapper.TreeMapper">
+	<resultMap id="BaseResultMap" type="com.iweb.model.Tree">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="TEXT" property="text" jdbcType="VARCHAR" />
+		<result column="URL" property="url" jdbcType="VARCHAR" />
+		<result column="STATE" property="state" jdbcType="VARCHAR" />
+		<result column="PID" property="pid" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, TEXT, URL, STATE, PID
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from IRUNNER1.NAV_TREE
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from IRUNNER1.NAV_TREE
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.iweb.model.Tree">
+		insert into IRUNNER1.NAV_TREE (ID, TEXT, URL,
+		STATE, PID)
+		values (#{id,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+		#{state,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.iweb.model.Tree">
+		insert into IRUNNER1.NAV_TREE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="text != null">
+				TEXT,
+			</if>
+			<if test="url != null">
+				URL,
+			</if>
+			<if test="state != null">
+				STATE,
+			</if>
+			<if test="pid != null">
+				PID,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="text != null">
+				#{text,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=VARCHAR},
+			</if>
+			<if test="pid != null">
+				#{pid,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.iweb.model.Tree">
+		update IRUNNER1.NAV_TREE
+		<set>
+			<if test="text != null">
+				TEXT = #{text,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				URL = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				STATE = #{state,jdbcType=VARCHAR},
+			</if>
+			<if test="pid != null">
+				PID = #{pid,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.iweb.model.Tree">
+		update IRUNNER1.NAV_TREE
+		set TEXT = #{text,jdbcType=VARCHAR},
+		URL = #{url,jdbcType=VARCHAR},
+		STATE = #{state,jdbcType=VARCHAR},
+		PID = #{pid,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<select id="selectCount" resultType="long">
+		SELECT COUNT(*) FROM IR_RIGHT_USER
+	</select>
+	
+	<select id="findTreeList" resultType="com.iweb.model.Tree" parameterType="string">
+		SELECT * FROM NAV_TREE WHERE PID = #{ID}
+	</select>
+	<select id="findTreeListRoot" resultType="com.iweb.model.Tree">
+		SELECT * FROM NAV_TREE WHERE PID IS NULL
+	</select>
+	
+</mapper>

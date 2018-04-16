@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iweb.mapper.ProorderMapper" >
+  <resultMap id="BaseResultMap" type="com.iweb.model.Proorder" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="PROID" property="proid" jdbcType="VARCHAR" />
+    <result column="MEMBER_ID" property="memberId" jdbcType="DECIMAL" />
+    <result column="PID" property="pid" jdbcType="DECIMAL" />
+    <result column="PLACETIME" property="placetime"  />
+    <result column="CLOSINGTIME" property="closingtime" />
+    <result column="QUANTITY" property="quantity" jdbcType="DECIMAL" />
+    <result column="ORDERSTATU" property="orderstatu" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, PROID, MEMBER_ID, PID, PLACETIME, CLOSINGTIME, QUANTITY, ORDERSTATU
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from IRUNNER1.IR_PROC_PROORDER
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from IRUNNER1.IR_PROC_PROORDER
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.iweb.model.Proorder" >
+    insert into IRUNNER1.IR_PROC_PROORDER (ID, PROID, MEMBER_ID, 
+      PID, PLACETIME, CLOSINGTIME, 
+      QUANTITY, ORDERSTATU)
+    values (#{id,jdbcType=DECIMAL}, #{proid,jdbcType=VARCHAR}, #{memberId,jdbcType=DECIMAL}, 
+      #{pid,jdbcType=DECIMAL}, #{placetime,jdbcType=DATE}, #{closingtime,jdbcType=DATE}, 
+      #{quantity,jdbcType=DECIMAL}, #{orderstatu,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.iweb.model.Proorder" >
+    insert into IRUNNER1.IR_PROC_PROORDER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="proid != null" >
+        PROID,
+      </if>
+      <if test="memberId != null" >
+        MEMBER_ID,
+      </if>
+      <if test="pid != null" >
+        PID,
+      </if>
+      <if test="placetime != null" >
+        PLACETIME,
+      </if>
+      <if test="closingtime != null" >
+        CLOSINGTIME,
+      </if>
+      <if test="quantity != null" >
+        QUANTITY,
+      </if>
+      <if test="orderstatu != null" >
+        ORDERSTATU,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="proid != null" >
+        #{proid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=DECIMAL},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=DECIMAL},
+      </if>
+      <if test="placetime != null" >
+        #{placetime,jdbcType=DATE},
+      </if>
+      <if test="closingtime != null" >
+        #{closingtime,jdbcType=DATE},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=DECIMAL},
+      </if>
+      <if test="orderstatu != null" >
+        #{orderstatu,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iweb.model.Proorder" >
+    update IRUNNER1.IR_PROC_PROORDER
+    <set >
+      <if test="proid != null" >
+        PROID = #{proid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        MEMBER_ID = #{memberId,jdbcType=DECIMAL},
+      </if>
+      <if test="pid != null" >
+        PID = #{pid,jdbcType=DECIMAL},
+      </if>
+      <if test="placetime != null" >
+        PLACETIME = #{placetime,jdbcType=DATE},
+      </if>
+      <if test="closingtime != null" >
+        CLOSINGTIME = #{closingtime},
+      </if>
+      <if test="quantity != null" >
+        QUANTITY = #{quantity,jdbcType=DECIMAL},
+      </if>
+      <if test="orderstatu != null" >
+        ORDERSTATU = #{orderstatu,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iweb.model.Proorder" >
+    update IRUNNER1.IR_PROC_PROORDER
+    set PROID = #{proid,jdbcType=VARCHAR},
+      MEMBER_ID = #{memberId,jdbcType=DECIMAL},
+      PID = #{pid,jdbcType=DECIMAL},
+      PLACETIME = #{placetime,jdbcType=DATE},
+      CLOSINGTIME = #{closingtime,jdbcType=DATE},
+      QUANTITY = #{quantity,jdbcType=DECIMAL},
+      ORDERSTATU = #{orderstatu,jdbcType=CHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  
+  <select id="selectMaxId" resultType="int">
+  select  nvl(max(id),0) from ir_proc_proorder
+  </select>
+  <select id="selectCountPidUsed" parameterType="java.math.BigDecimal" resultType="com.iweb.model.Proorder">
+  	select * from ir_proc_proorder where pid  = #{pid}
+  </select>
+  
+  <select id="selectCount" resultType="long">
+  	select count(*) from ir_proc_proorder
+  </select>
+  <resultMap type="com.iweb.model.Proorder" id="ListUserInfoMap" extends="BaseResultMap">
+  	<association property="user" javaType="com.iweb.model.User">
+    <id column="USID" property="usid" jdbcType="DECIMAL" />
+    <result column="USNAME" property="usname" jdbcType="VARCHAR" />
+    <result column="PASSWD" property="passwd" jdbcType="VARCHAR" />
+    <result column="USSEX" property="ussex" jdbcType="CHAR" />
+    <result column="BIRTHDAY" property="birthday" javaType="java.util.Date"/>
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="CELLPHONE" property="cellphone" jdbcType="DECIMAL" />
+    <result column="JOINDATE" property="joindate" javaType="java.util.Date"/>
+  	</association>
+  	<association property="info" javaType="com.iweb.model.Info">
+		<id column="PID" property="pid" jdbcType="DECIMAL" />
+		<result column="PNAME" property="pname" jdbcType="VARCHAR" />
+		<result column="PCODE" property="pcode" jdbcType="VARCHAR" />
+		<result column="PRICE" property="price" jdbcType="DECIMAL" />
+		<result column="PSCRIPT" property="pscript" jdbcType="VARCHAR" />
+		<result column="PTID" property="ptid" jdbcType="DECIMAL" />
+		<result column="TOTALSTOCK" property="totalstock" jdbcType="DECIMAL" />
+		<result column="VIRTUALSTOCK" property="virtualstock" jdbcType="DECIMAL" />
+  	</association>
+  </resultMap>
+  <select id="selectListUserInfo" resultMap="ListUserInfoMap" parameterType="com.iweb.utils.Page">
+  <![CDATA[
+  
+select * from 
+(select * from 
+(select a.*,rownum rn from 
+(select * from ir_proc_proorder order by ${sort}  ${order} ) a where rownum<=#{endIndex} ) b where b.rn >#{startIndex}) c
+left join ir_right_user u on u.usid=c.member_id 
+left join ir_proc_info i on i.pid=c.pid
+  ]]>
+  </select>
+  
+  <select id="selectOrderStatus" parameterType="java.math.BigDecimal" resultType="string">
+  select r.orderstatu from ir_proc_proorder r where r.id = #{id}
+  </select>
+   
+  <select id="selectOrderCount" parameterType="java.math.BigDecimal" resultType="int">
+  select p.quantity from ir_proc_proorder p where id = #{id} 
+  </select>
+</mapper>

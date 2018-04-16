@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iweb.mapper.InfoMapper">
+	<resultMap id="BaseResultMap" type="com.iweb.model.Info">
+		<id column="PID" property="pid" jdbcType="DECIMAL" />
+		<result column="PNAME" property="pname" jdbcType="VARCHAR" />
+		<result column="PCODE" property="pcode" jdbcType="VARCHAR" />
+		<result column="PRICE" property="price" jdbcType="DECIMAL" />
+		<result column="PSCRIPT" property="pscript" jdbcType="VARCHAR" />
+		<result column="PTID" property="ptid" jdbcType="DECIMAL" />
+		<result column="TOTALSTOCK" property="totalstock" jdbcType="DECIMAL" />
+		<result column="VIRTUALSTOCK" property="virtualstock" jdbcType="DECIMAL" />
+		<association property="type" javaType="com.iweb.model.Type" column="ptid"
+			select="com.iweb.mapper.TypeMapper.selectByPrimaryKey"></association>
+	</resultMap>
+	<sql id="Base_Column_List">
+		PID, PNAME, PCODE, PRICE, PSCRIPT, PTID, TOTALSTOCK, VIRTUALSTOCK
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal">
+		select
+		<include refid="Base_Column_List" />
+		from IRUNNER1.IR_PROC_INFO
+		where PID = #{pid,jdbcType=DECIMAL}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+		delete from IRUNNER1.IR_PROC_INFO
+		where PID =
+		#{pid,jdbcType=DECIMAL}
+	</delete>
+	<insert id="insert" parameterType="com.iweb.model.Info">
+		insert into IRUNNER1.IR_PROC_INFO (PID, PNAME, PCODE,
+		PRICE, PSCRIPT, PTID,
+		TOTALSTOCK, VIRTUALSTOCK)
+		values (#{pid,jdbcType=DECIMAL},
+		#{pname,jdbcType=VARCHAR}, #{pcode,jdbcType=VARCHAR},
+		#{price,jdbcType=DECIMAL},
+		#{pscript,jdbcType=VARCHAR}, #{ptid,jdbcType=DECIMAL},
+		#{totalstock,jdbcType=DECIMAL},
+		#{virtualstock,jdbcType=DECIMAL})
+	</insert>
+	<insert id="insertSelective" parameterType="com.iweb.model.Info">
+		insert into IRUNNER1.IR_PROC_INFO
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="pid != null">
+				PID,
+			</if>
+			<if test="pname != null">
+				PNAME,
+			</if>
+			<if test="pcode != null">
+				PCODE,
+			</if>
+			<if test="price != null">
+				PRICE,
+			</if>
+			<if test="pscript != null">
+				PSCRIPT,
+			</if>
+			<if test="ptid != null">
+				PTID,
+			</if>
+			<if test="totalstock != null">
+				TOTALSTOCK,
+			</if>
+			<if test="virtualstock != null">
+				VIRTUALSTOCK,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="pid != null">
+				#{pid,jdbcType=DECIMAL},
+			</if>
+			<if test="pname != null">
+				#{pname,jdbcType=VARCHAR},
+			</if>
+			<if test="pcode != null">
+				#{pcode,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=DECIMAL},
+			</if>
+			<if test="pscript != null">
+				#{pscript,jdbcType=VARCHAR},
+			</if>
+			<if test="ptid != null">
+				#{ptid,jdbcType=DECIMAL},
+			</if>
+			<if test="totalstock != null">
+				#{totalstock,jdbcType=DECIMAL},
+			</if>
+			<if test="virtualstock != null">
+				#{virtualstock,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.iweb.model.Info">
+		update IRUNNER1.IR_PROC_INFO
+		<set>
+			<if test="pname != null">
+				PNAME = #{pname,jdbcType=VARCHAR},
+			</if>
+			<if test="pcode != null">
+				PCODE = #{pcode,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				PRICE = #{price,jdbcType=DECIMAL},
+			</if>
+			<if test="pscript != null">
+				PSCRIPT = #{pscript,jdbcType=VARCHAR},
+			</if>
+			<if test="ptid != null">
+				PTID = #{ptid,jdbcType=DECIMAL},
+			</if>
+			<if test="totalstock != null">
+				TOTALSTOCK = #{totalstock,jdbcType=DECIMAL},
+			</if>
+			<if test="virtualstock != null">
+				VIRTUALSTOCK = #{virtualstock,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where PID = #{pid,jdbcType=DECIMAL}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.iweb.model.Info">
+		update IRUNNER1.IR_PROC_INFO
+		set PNAME =
+		#{pname,jdbcType=VARCHAR},
+		PCODE = #{pcode,jdbcType=VARCHAR},
+		PRICE = #{price,jdbcType=DECIMAL},
+		PSCRIPT = #{pscript,jdbcType=VARCHAR},
+		PTID = #{ptid,jdbcType=DECIMAL},
+		TOTALSTOCK =
+		#{totalstock,jdbcType=DECIMAL},
+		VIRTUALSTOCK = #{virtualstock,jdbcType=DECIMAL}
+		where PID =
+		#{pid,jdbcType=DECIMAL}
+	</update>
+
+	<select id="selectUsedNodes" resultType="int">
+		select ptid from ir_proc_info group by ptid
+	</select>
+
+	<select id="selectCount" resultType="long">
+		select count(*) from ir_proc_info
+	</select>
+
+	<select id="selectListTypes" resultMap="BaseResultMap" parameterType="com.iweb.utils.Page">
+ <![CDATA[
+select * from 
+(select a.*,rownum rn  from 
+(select  * from ir_proc_info order by ${sort}  ${order} ) a  where rownum <=#{endIndex} ) where rn >#{startIndex}
+ ]]>
+	</select>
+
+	<select id="selectInfoExist" parameterType="string" resultType="int">
+		select count(*) from
+		ir_proc_info where pcode = #{pcode}
+	</select>
+
+	<select id="selectMaxId" resultType="int">
+		select max(pid) from ir_proc_info
+	</select>
+
+	<resultMap type="com.iweb.model.Info" id="InfosStockMap" extends="BaseResultMap">
+		<association property="shopping" javaType="com.iweb.model.Shopping">
+			<id column="ID" property="id" jdbcType="DECIMAL" />
+			<result column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+			<result column="USID" property="usid" jdbcType="DECIMAL" />
+			<result column="PID" property="pid" jdbcType="DECIMAL" />
+			<result column="ORDER_COUNT" property="orderCount" jdbcType="DECIMAL" />
+			<result column="JOINTIME" property="jointime" jdbcType="DATE" />
+			<result column="CLOSETIME" property="closetime" jdbcType="DATE" />
+			<result column="STATU" property="statu" jdbcType="CHAR" />
+		</association>
+	</resultMap>
+
+	<select id="queryInfosStock" parameterType="com.iweb.utils.Page" resultMap="InfosStockMap">
+<![CDATA[
+select * from 
+(select a.*,rownum rn from 
+(select * from ir_proc_info order by ${sort}  ${order} ) a where rownum <= #{endIndex} ) b 
+left join 
+(select s.pid,sum(s.order_count)as order_count from ir_proc_shopping s group by pid ) so on b.pid = so.pid and  b.rn >#{startIndex} 
+]]>
+	</select>
+</mapper>

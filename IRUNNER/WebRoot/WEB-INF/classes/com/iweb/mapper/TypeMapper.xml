@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iweb.mapper.TypeMapper" >
+  <resultMap id="BaseResultMap" type="com.iweb.model.Type" >
+    <id column="PTID" property="ptid" jdbcType="DECIMAL" />
+    <result column="PTYPE" property="ptype" jdbcType="VARCHAR" />
+    <result column="MAINTYPE" property="maintype" jdbcType="DECIMAL" />
+    <result column="STATE" property="state"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PTID, PTYPE, MAINTYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from IRUNNER1.IR_PROC_TYPE
+    where PTID = #{ptid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from IRUNNER1.IR_PROC_TYPE
+    where PTID = #{ptid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.iweb.model.Type" >
+    insert into IRUNNER1.IR_PROC_TYPE (PTID, PTYPE, MAINTYPE
+      )
+    values (#{ptid,jdbcType=DECIMAL}, #{ptype,jdbcType=VARCHAR}, #{maintype,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.iweb.model.Type" >
+    insert into IRUNNER1.IR_PROC_TYPE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ptid != null" >
+        PTID,
+      </if>
+      <if test="ptype != null" >
+        PTYPE,
+      </if>
+      <if test="maintype != null" >
+        MAINTYPE,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ptid != null" >
+        #{ptid,jdbcType=DECIMAL},
+      </if>
+      <if test="ptype != null" >
+        #{ptype,jdbcType=VARCHAR},
+      </if>
+      <if test="maintype != null" >
+        #{maintype,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iweb.model.Type" >
+    update IRUNNER1.IR_PROC_TYPE
+    <set >
+      <if test="ptype != null" >
+        PTYPE = #{ptype,jdbcType=VARCHAR},
+      </if>
+      <if test="maintype != null" >
+        MAINTYPE = #{maintype,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where PTID = #{ptid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iweb.model.Type" >
+    update IRUNNER1.IR_PROC_TYPE
+    set PTYPE = #{ptype,jdbcType=VARCHAR},
+      MAINTYPE = #{maintype,jdbcType=DECIMAL}
+    where PTID = #{ptid,jdbcType=DECIMAL}
+  </update>
+  
+  <select id="selectCount" resultType="long">
+  	select count(*) from ir_proc_type
+  </select>
+  
+  <select id="selectList" resultMap="BaseResultMap">
+  	select * from ir_proc_type
+  </select>
+  
+  <select id="queryParentNodes" resultType="com.iweb.model.Type">
+  	select * from ir_proc_type where state = 'closed'
+  </select>
+  
+  <select id="selectCountExist" resultType="int" parameterType="com.iweb.model.Type">
+  	select count(*) from ir_proc_type where  ptype = #{ptype}
+  </select>
+  
+  <select id="selectMaxId" resultType="int">
+  	select max(ptid) from ir_proc_type
+  </select>
+  
+  <select id="selectAllLeafs" resultType="int">
+  	select ptid from ir_proc_type where state is null 
+  </select>
+  
+  <select id="selectDeleteAbleNodes" resultType="java.lang.Integer">
+<![CDATA[
+	  	select ptid from ir_proc_type where state = 'closed' and ptid <>0 and  ptid  not in
+(select maintype from ir_proc_type group by maintype having maintype <>0 and maintype is not null)
+]]>
+  </select>
+  
+  <select id="selectInfoTypes" resultType="com.iweb.model.Type">
+  	select * from ir_proc_type where state is null
+  </select>
+</mapper>

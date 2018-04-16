@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iweb.mapper.MenuMapper" >
+ <resultMap id="BaseResultMap" type="com.iweb.model.Menu" >
+    <id column="MEID" property="meid" jdbcType="DECIMAL" />
+    <result column="MEMETHOD" property="memethod" jdbcType="VARCHAR" />
+    <result column="MNAME" property="mname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MEID, MEMETHOD, MNAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from IRUNNER1.IR_RIGHT_MENU
+    where MEID = #{meid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from IRUNNER1.IR_RIGHT_MENU
+    where MEID = #{meid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.iweb.model.Menu" >
+    insert into IRUNNER1.IR_RIGHT_MENU (MEID, MEMETHOD, MNAME
+      )
+    values (#{meid,jdbcType=DECIMAL}, #{memethod,jdbcType=VARCHAR}, #{mname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.iweb.model.Menu" >
+    insert into IRUNNER1.IR_RIGHT_MENU
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="meid != null" >
+        MEID,
+      </if>
+      <if test="memethod != null" >
+        MEMETHOD,
+      </if>
+      <if test="mname != null" >
+        MNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="meid != null" >
+        #{meid,jdbcType=DECIMAL},
+      </if>
+      <if test="memethod != null" >
+        #{memethod,jdbcType=VARCHAR},
+      </if>
+      <if test="mname != null" >
+        #{mname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iweb.model.Menu" >
+    update IRUNNER1.IR_RIGHT_MENU
+    <set >
+      <if test="memethod != null" >
+        MEMETHOD = #{memethod,jdbcType=VARCHAR},
+      </if>
+      <if test="mname != null" >
+        MNAME = #{mname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MEID = #{meid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iweb.model.Menu" >
+    update IRUNNER1.IR_RIGHT_MENU
+    set MEMETHOD = #{memethod,jdbcType=VARCHAR},
+      MNAME = #{mname,jdbcType=VARCHAR}
+    where MEID = #{meid,jdbcType=DECIMAL}
+  </update>
+  
+  <select id="selectList" resultType="com.iweb.model.Menu">
+  	select * from ir_right_menu
+  </select>
+  
+  <select id="selectCount" resultType="long">
+  	select count(*) from ir_right_menu
+  </select>
+  
+  <select id="selectListPage" parameterType="com.iweb.utils.Page" resultType="com.iweb.model.Menu">
+<![CDATA[
+select * from 
+(select a.* , rownum rn  from 
+(select * from ir_right_menu m order by ${sort} ${order} ) a where rownum <=#{endIndex}) where rn >#{startIndex}
+]]>
+  	
+  </select>
+  
+  
+  <select id="selectMaxId" resultType="int">
+  	select max(meid) from ir_right_menu
+  </select>
+  
+  
+  <select id="selectCountByMname" resultType="int" parameterType="string">
+  	select count(*) from ir_right_menu a where a.mname = #{mname}
+  </select>
+</mapper>

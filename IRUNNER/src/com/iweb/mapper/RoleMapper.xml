@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iweb.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.iweb.model.Role" >
+    <id column="RID" property="rid" jdbcType="DECIMAL" />
+    <result column="RNAME" property="rname" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RID, RNAME, DESCRIPTION
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from IRUNNER1.IR_RIGHT_ROLE
+    where RID = #{rid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from IRUNNER1.IR_RIGHT_ROLE
+    where RID = #{rid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.iweb.model.Role" >
+    insert into IRUNNER1.IR_RIGHT_ROLE (RID, RNAME, DESCRIPTION
+      )
+    values (#{rid,jdbcType=DECIMAL}, #{rname,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.iweb.model.Role" >
+    insert into IRUNNER1.IR_RIGHT_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        RID,
+      </if>
+      <if test="rname != null" >
+        RNAME,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=DECIMAL},
+      </if>
+      <if test="rname != null" >
+        #{rname,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iweb.model.Role" >
+    update IRUNNER1.IR_RIGHT_ROLE
+    <set >
+      <if test="rname != null" >
+        RNAME = #{rname,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RID = #{rid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iweb.model.Role" >
+    update IRUNNER1.IR_RIGHT_ROLE
+    set RNAME = #{rname,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR}
+    where RID = #{rid,jdbcType=DECIMAL}
+  </update>
+  
+  <select id="findList" resultType="com.iweb.model.Role">
+  	select * from ir_right_role
+  </select>
+  
+  <select id="selectCount" resultType="long">
+  	select count(*) from ir_right_role
+  </select>
+  
+  <resultMap type="com.iweb.model.Role" id="RoleMenuMap" extends="BaseResultMap">
+  	<collection property="menus" ofType="com.iweb.model.Menu">
+  		<id column="MEID" property="meid" jdbcType="DECIMAL" />
+    	<result column="MNAME" property="mname" jdbcType="VARCHAR" />
+  	</collection>
+  </resultMap>
+  
+  <select id="selectListRoleMenu" resultMap="RoleMenuMap" parameterType="com.iweb.utils.Page">
+<![CDATA[
+select rr.rid,rr.rname,rr.rn,rr.description,m.meid,m.mname from (select r.*,rownum rn from ir_right_role r order by r.rid asc ) rr
+left join ir_right_rolemenu rm on rr.rid=rm.rsid
+left join ir_right_menu m on rm.meid=m.meid 
+where rr.rn>#{startIndex} and rr.rn<=#{endIndex} order by ${sort} ${order} 
+]]>  
+  
+  
+  </select>
+  
+  <select id="selectMaxId" resultType="long">
+  	select nvl(max(rid),0) from ir_right_role
+  </select>
+  
+  <select id="selectRnameExist" resultType="int" parameterType="string">
+  	select count(*) from ir_right_role where rname = #{rname}
+  </select>
+</mapper>

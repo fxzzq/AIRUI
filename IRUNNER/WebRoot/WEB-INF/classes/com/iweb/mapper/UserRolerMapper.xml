@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iweb.mapper.UserRolerMapper" >
+  <resultMap id="BaseResultMap" type="com.iweb.model.UserRoler" >
+    <id column="OID" property="oid" jdbcType="DECIMAL" />
+    <result column="USID" property="usid" jdbcType="DECIMAL" />
+    <result column="RID" property="rid" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OID, USID, RID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from IRUNNER1.IR_RIGHT_USERROLE
+    where OID = #{oid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from IRUNNER1.IR_RIGHT_USERROLE
+    where OID = #{oid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.iweb.model.UserRoler" >
+    insert into IRUNNER1.IR_RIGHT_USERROLE (OID, USID, RID
+      )
+    values (#{oid,jdbcType=DECIMAL}, #{usid,jdbcType=DECIMAL}, #{rid,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.iweb.model.UserRoler" >
+    insert into IRUNNER1.IR_RIGHT_USERROLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        OID,
+      </if>
+      <if test="usid != null" >
+        USID,
+      </if>
+      <if test="rid != null" >
+        RID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=DECIMAL},
+      </if>
+      <if test="usid != null" >
+        #{usid,jdbcType=DECIMAL},
+      </if>
+      <if test="rid != null" >
+        #{rid,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iweb.model.UserRoler" >
+    update IRUNNER1.IR_RIGHT_USERROLE
+    <set >
+      <if test="usid != null" >
+        USID = #{usid,jdbcType=DECIMAL},
+      </if>
+      <if test="rid != null" >
+        RID = #{rid,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where OID = #{oid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iweb.model.UserRoler" >
+    update IRUNNER1.IR_RIGHT_USERROLE
+    set USID = #{usid,jdbcType=DECIMAL},
+      RID = #{rid,jdbcType=DECIMAL}
+    where OID = #{oid,jdbcType=DECIMAL}
+  </update>
+  
+  <select id="selectMaxiId" resultType="int">
+  	select max(oid) from ir_right_userrole
+  </select>
+  
+  <select id="selectUsedRid" resultType="int" parameterType="java.math.BigDecimal">
+  	select count(*) from ir_right_userrole where rid = #{rid}
+  </select>
+  
+  
+  <select id="selectByUsid" resultType="com.iweb.model.UserRoler" parameterType="java.math.BigDecimal">
+  	select * from ir_right_userrole where usid =#{usid}
+  </select>
+  
+  <delete id="deleteUsid" parameterType="int" >
+  	delete IR_RIGHT_USERROLE where usid = #{usid}
+  </delete>
+</mapper>

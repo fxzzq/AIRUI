@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iweb.mapper.RolerMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.iweb.model.RolerMenu" >
+    <id column="OID" property="oid" jdbcType="DECIMAL" />
+    <result column="RSID" property="rsid" jdbcType="DECIMAL" />
+    <result column="MEID" property="meid" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OID, RSID, MEID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from IRUNNER1.IR_RIGHT_ROLEMENU
+    where OID = #{oid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from IRUNNER1.IR_RIGHT_ROLEMENU
+    where OID = #{oid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.iweb.model.RolerMenu" >
+    insert into IRUNNER1.IR_RIGHT_ROLEMENU (OID, RSID, MEID
+      )
+    values (#{oid,jdbcType=DECIMAL}, #{rsid,jdbcType=DECIMAL}, #{meid,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.iweb.model.RolerMenu" >
+    insert into IRUNNER1.IR_RIGHT_ROLEMENU
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        OID,
+      </if>
+      <if test="rsid != null" >
+        RSID,
+      </if>
+      <if test="meid != null" >
+        MEID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=DECIMAL},
+      </if>
+      <if test="rsid != null" >
+        #{rsid,jdbcType=DECIMAL},
+      </if>
+      <if test="meid != null" >
+        #{meid,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iweb.model.RolerMenu" >
+    update IRUNNER1.IR_RIGHT_ROLEMENU
+    <set >
+      <if test="rsid != null" >
+        RSID = #{rsid,jdbcType=DECIMAL},
+      </if>
+      <if test="meid != null" >
+        MEID = #{meid,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where OID = #{oid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iweb.model.RolerMenu" >
+    update IRUNNER1.IR_RIGHT_ROLEMENU
+    set RSID = #{rsid,jdbcType=DECIMAL},
+      MEID = #{meid,jdbcType=DECIMAL}
+    where OID = #{oid,jdbcType=DECIMAL}
+  </update>
+  
+  <select id="selectMaxId" resultType="int">
+  	select max(oid) from ir_right_rolemenu
+  </select>
+  
+  <select id="selectRoleMenuByRid" resultType="int" parameterType="java.math.BigDecimal">
+  	select count(*) from ir_right_rolemenu where rsid = #{rid}
+  </select>
+  
+  <delete id="deleteByRid" parameterType="java.math.BigDecimal">
+  	delete from ir_right_rolemenu where rsid = #{rid}
+  </delete>
+  
+  <select id="selectMeidsByRsid" resultType="com.iweb.model.RolerMenu" parameterType="java.math.BigDecimal">
+  	select  *  from ir_right_rolemenu  where rsid = #{rid}
+  </select>
+  
+  <select id="selectCountByMeid" resultType="int" parameterType="string">
+  	select count(*) from ir_right_rolemenu  where meid = #{meid}
+  </select>
+</mapper>

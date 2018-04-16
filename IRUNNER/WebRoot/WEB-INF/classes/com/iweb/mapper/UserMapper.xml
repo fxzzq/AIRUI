@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iweb.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.iweb.model.User" >
+    <id column="USID" property="usid" jdbcType="DECIMAL" />
+    <result column="USNAME" property="usname" jdbcType="VARCHAR" />
+    <result column="PASSWD" property="passwd" jdbcType="VARCHAR" />
+    <result column="USSEX" property="ussex" jdbcType="CHAR" />
+    <result column="BIRTHDAY" property="birthday" javaType="java.util.Date"/>
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="CELLPHONE" property="cellphone" jdbcType="DECIMAL" />
+    <result column="JOINDATE" property="joindate" javaType="java.util.Date"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    USID, USNAME, PASSWD, USSEX, BIRTHDAY, ADDRESS, CELLPHONE, JOINDATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from IRUNNER1.IR_RIGHT_USER
+    where USID = #{usid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from IRUNNER1.IR_RIGHT_USER
+    where USID = #{usid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.iweb.model.User" >
+    insert into IRUNNER1.IR_RIGHT_USER (USID, USNAME, PASSWD, 
+      USSEX, BIRTHDAY, ADDRESS, 
+      CELLPHONE, JOINDATE)
+    values (#{usid,jdbcType=DECIMAL}, #{usname,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, 
+      #{ussex,jdbcType=CHAR}, #{birthday}, #{address,jdbcType=VARCHAR}, 
+      #{cellphone,jdbcType=DECIMAL}, #{joindate})
+  </insert>
+  <insert id="insertSelective" parameterType="com.iweb.model.User" >
+    insert into IRUNNER1.IR_RIGHT_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="usid != null" >
+        USID,
+      </if>
+      <if test="usname != null" >
+        USNAME,
+      </if>
+      <if test="passwd != null" >
+        PASSWD,
+      </if>
+      <if test="ussex != null" >
+        USSEX,
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="cellphone != null" >
+        CELLPHONE,
+      </if>
+      <if test="joindate != null" >
+        JOINDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="usid != null" >
+        #{usid,jdbcType=DECIMAL},
+      </if>
+      <if test="usname != null" >
+        #{usname,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="ussex != null" >
+        #{ussex,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="cellphone != null" >
+        #{cellphone,jdbcType=DECIMAL},
+      </if>
+      <if test="joindate != null" >
+        #{joindate},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iweb.model.User" >
+    update IRUNNER1.IR_RIGHT_USER
+    <set >
+      <if test="usname != null" >
+        USNAME = #{usname,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+        PASSWD = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="ussex != null" >
+        USSEX = #{ussex,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="cellphone != null" >
+        CELLPHONE = #{cellphone,jdbcType=DECIMAL},
+      </if>
+      <if test="joindate != null" >
+        JOINDATE = #{joindate,jdbcType=DATE},
+      </if>
+    </set>
+    where USID = #{usid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iweb.model.User" >
+    update IRUNNER1.IR_RIGHT_USER
+    set USNAME = #{usname,jdbcType=VARCHAR},
+      PASSWD = #{passwd,jdbcType=VARCHAR},
+      USSEX = #{ussex,jdbcType=CHAR},
+      BIRTHDAY = #{birthday,jdbcType=DATE},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      CELLPHONE = #{cellphone,jdbcType=DECIMAL},
+      JOINDATE = #{joindate,jdbcType=DATE}
+    where USID = #{usid,jdbcType=DECIMAL}
+  </update>
+  
+  <select id="findCount" resultType="long">
+  	SELECT COUNT(*) FROM IR_RIGHT_USER
+  </select>
+  
+  <resultMap type="com.iweb.model.User" id="ListUserRole" extends="BaseResultMap">
+  	<association property="role" javaType="com.iweb.model.Role">
+    <id column="RID" property="rid" jdbcType="DECIMAL" />
+    <result column="RNAME" property="rname" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />  		
+  	</association>
+  </resultMap>
+  
+  
+  <select id="findListUserRole" resultMap="ListUserRole" parameterType="com.iweb.utils.Page">
+	<![CDATA[
+	SELECT * FROM 
+	(SELECT URM.*,ROWNUM RN FROM 
+	(SELECT U.USID,U.USNAME,U.PASSWD,U.USSEX,U.BIRTHDAY,U.ADDRESS,U.CELLPHONE,U.JOINDATE,R.RID, R.RNAME,R.DESCRIPTION FROM IR_RIGHT_USER U 
+	LEFT JOIN IR_RIGHT_USERROLE UR ON U.USID=UR.USID 
+	LEFT JOIN IR_RIGHT_ROLE R ON UR.RID=R.RID
+	ORDER BY U.USID)  URM  WHERE ROWNUM<=#{endIndex}) WHERE RN >#{startIndex}
+	]]>  	
+  </select>
+  
+  <select id="selectMaxId" resultType="int">
+  	select max(usid) from ir_right_user
+  </select>
+  
+  <select id="selectCountByName" parameterType="string" resultType="int">
+  	select count(*) from Ir_Right_User  u where u.usname = #{usname} 
+  </select>
+  
+  <resultMap type="com.iweb.model.User" id="UserRolesMap" extends="BaseResultMap">
+  	<collection property="menus" ofType="com.iweb.model.Menu">
+    <id column="MEID" property="meid" jdbcType="DECIMAL" />
+    <result column="MEMETHOD" property="memethod" jdbcType="VARCHAR" />
+    <result column="MNAME" property="mname" jdbcType="VARCHAR" />  		
+  	</collection>
+  </resultMap>
+  <select id="selectUserRoles" resultMap="UserRolesMap">
+  SELECT U.USID,U.USNAME,M.MEMETHOD
+  FROM IR_RIGHT_USER U
+  LEFT JOIN IR_RIGHT_USERROLE UR
+    ON U.USID = UR.USID
+  LEFT JOIN IR_RIGHT_ROLE R
+    ON UR.RID = R.RID
+    LEFT JOIN IR_RIGHT_ROLEMENU RM ON RM.RSID=R.RID
+    LEFT JOIN IR_RIGHT_MENU M ON M.MEID=RM.MEID
+ ORDER BY U.USID
+  
+  </select>
+  
+  
+  <select id="selectUser" parameterType="com.iweb.model.User" resultType="com.iweb.model.User">
+  	 select * from ir_right_user u where u.usname = #{usname} and u.passwd =   #{passwd}
+  </select>
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="IRUNNER"
+  id="myeclipse.1498182348440"
+  context-root="/IRUNNER"
+  j2ee-spec="5.0"
+  archive="IRUNNER.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
