@@ -1,0 +1,37 @@
+.required{
+	color:red
+}
+td{
+	border:#9CF dotted 1px;
+	 font-size:12px; height:30px; 
+	 line-height:30px; 
+	 vertical-align:middle
+	}
+#userinfo{
+ 	background: #EEE7EA;
+  	height:35px; 
+  	line-height:35px; 
+  	font-size:14px;
+  	font-weight:bold
+	}
+ 
+
+.align_right{
+	text-align:right
+}
+#title{
+	width:1000px;
+	height: 700px;
+	margin:auto;
+	margin-top:100px;
+	box-shadow:#069 5px 5px 5px;
+}
+table{
+	 width:100%;
+	 border:#03C solid 1px;
+	 border-collapse:collapse
+}
+#footer{
+	 width:100%; 
+	 text-align:center
+}

@@ -1,0 +1,34 @@
+
+.form-control{
+	width: 60% !important;
+}
+#title{
+	text-align: center;
+	font-size: 23px
+}
+#bg{
+	width:1000px;
+	height:700px;
+	 margin:auto
+}
+#li{
+	width:100%;border:#006 solid 1px
+}
+#left{
+	width:30%;
+	height:100%
+}
+#right{
+	width:70%;height:100%
+}
+#co{
+	color:red
+}
+
+td { 
+	border:#09F solid 1px
+}
+#footer{
+text-align: center;
+}
+

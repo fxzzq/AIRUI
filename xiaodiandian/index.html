@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+     @import url("lib/bootstrap-3.3.7-dist/css/bootstrap.min.css");
+     @import url("css/blog.css");
+    </style>
+</head>
+
+<body>
+    <div id="page">
+        <div id="head">
+            <div id="menu_bar">
+                <div id="menu_bar_img">
+                        <img src="img/dot.jpg"/>
+                        <ul id="logon">
+                            <li><a href="reg_protocal.html">注册</a></li>
+                            <li><label>|</label></li>
+                            <li><a href="login.html">登录</a></li>
+                            <li><label>|</label></li>
+                        </ul>
+                
+                
+                </div>
+                <div id="select"  class="col-sm-9">
+                   <div class="col-sm-3">
+                    <select class="form-control multiple"  name="selectType">
+                        <option>文章名</option>
+                        <option>文章分类</option>
+                        <option>博客名</option>
+                    </select>
+                    </div>
+                        <div class="col-sm-3">
+                              <input type="text"  class="form-control" name="key"/>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="button"   class="btn btn-success" value="检索"/>
+                        </div>
+                  
+                </div>
+                <div id="about_blog" class="col-sm-3">
+                    <a href="py.html">我的博客/申请博客</a>
+                    <a href="index.html">首页</a>
+                </div>
+            </div>
+        </div>
+     
+        <div id="content">
+            <div id="left">
+                <div class="list">
+                     <label>文章分类</label>
+                     <ul class="none_list">
+                         <li><a >编程技巧</a></li>
+                         <li><a >数据库知识</a></li>
+                         <li><a >Java Web开发</a></li>
+                     </ul>
+                </div>
+                <div class="list">
+                    <label>博客排名</label>
+                    <ul class="decimal_list">
+                         <li><a>鸟叔的Linux之门</a></li>
+                         <li><a>Java编程随笔</a></li>
+                         <li><a>Java教学知识点集汇</a></li>
+                     </ul>
+                </div>
+            </div>
+           <iframe id="main" src="index_content.html"></iframe>
+        </div>
+      
+        <div id="foot">
+            copyright &copy;  xzq.
+        </div>
+        
+    </div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+#title{
+	width:1000px; 
+	height:700px;
+	margin:auto; 
+	margin-top:100px;
+	box-shadow:#069 5px 5px 5px;
+
+table{
+	border:0;
+	width:100%;
+}
+#pre1{
+	font-size:18px;
+	 height:300px;
+	  overflow:scroll;
+}

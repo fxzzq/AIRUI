@@ -1,0 +1,42 @@
+#title{
+ 	width:1000px;
+  	height:700px;
+   	margin:auto;
+    background:#37583D;
+}
+#footer{
+	width:1000px; 
+	height:100px;
+	margin:auto; 
+	background-color:#4E9BA1;
+	position:relative;
+	padding-top:20px;
+	padding-bottom:20px;
+}
+#footer p{
+	color:white;
+	text-align:center;
+}
+
+#title1{
+	 background-color:#399;
+	 width:600px;
+	 height:400px; 
+	 margin:auto ;
+	 padding:5px; 
+	 border:#069 solid 2px; 
+	 position:relative; 
+	 top:100px;
+}
+#login{
+	 font-family:华文彩云; 
+	 color:white; 
+	 font-size:38px; 
+	 margin:5px;
+}
+hr{
+	border:#369 dotted 1px;
+}
+.checkbox input{
+	
+}

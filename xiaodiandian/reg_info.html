@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+<style>
+@import url("css/reg_info.css");
+@import url("lib/bootstrap-3.3.7-dist/css/bootstrap.min.css");
+</style>
+</head>
+<body>
+     <div id="title">
+     <label>当前位置：首页 > 个人注册</label>
+     <hr/>
+     <table>
+         <tr>
+            <td colspan="2" id="userinfo">用户基本信息（<font class="required">*</font>为必填信息）
+            </td>
+         </tr>
+         <tr>
+            <td class="align_right">
+                <font class="required">*</font>用户名
+            </td>
+            <td>
+                <div>以字母开头，字母与数字或者下划线的组合（3-20位）</div>
+                <div class="col-sm-5">
+                         <input type="text" class="form-control"/>
+                    </div>
+             
+            </td>
+         </tr>
+         <tr>
+            <td class="align_right">
+                <font class="required">*</font>密码
+           </td>
+            <td><div>字母与数字或者下划线的组合（6-12位）</div>
+                <div class="col-sm-5">
+                <input type="password" class="form-control"/>
+            </div>
+            </td>
+         </tr>
+         <tr>
+            <td class="align_right">
+                <font class="required">*</font>确认密码
+            </td>
+            <td>
+                <div class="col-sm-5">
+                    <input type="password" class="form-control"/>
+                </div>
+                
+            </td>
+         </tr>
+         <tr>
+            <td class="align_right">
+                <font class="required">*</font>电子邮件
+            </td>
+            <td>
+                <div class="col-sm-5">
+                <input type="text" class="form-control"/>
+            </div>
+            </td>
+         </tr>
+         <tr>
+            <td class="align_right">
+                <font class="required">*</font>密码找回问题
+            </td>
+            <td>
+                <div class="col-sm-5">
+                <input type="text"  class="form-control"/>
+            </div>
+            </td>
+         </tr>
+         <tr>
+            <td class="align_right">
+                <font class="required">*</font>密码找回答案
+            </td>
+            <td>
+                <div class="col-sm-5">
+                <input type="text" class="form-control"/>
+            </div>
+            </td>
+         </tr>
+         <tr>
+            <td class="align_right">
+                <font class="required">*</font>验证码
+            </td>
+            <td>
+                <div class="col-sm-5">
+                <input type="text" class="form-control"/>
+            </div>
+            </td>
+         </tr>
+     </table>
+     <div id="footer">
+         <button type="button" class="btn btn-info" onclick="window.location='reg_protocal.html'">上一步</button>
+         <button type="button" class="btn btn-info" onclick="document.location='regok.html'">下一步</button>
+     
+     </div>
+     
+     </div>
+     
+</body>
+</html>

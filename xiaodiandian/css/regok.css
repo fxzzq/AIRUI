@@ -1,0 +1,28 @@
+#title{
+	width:1000px; 
+	height:700px;
+	margin:auto;
+	margin-top:100px;
+	box-shadow:#069 5px 5px 5px;
+}
+table{
+	 width:100%; 
+	 border:#069 solid 1px;
+	 border-collapse:collapse
+}
+#reg1{
+	height:35px; 
+	line-height:35px;
+	background:#EEE7EA;
+}
+#reg2{
+	 color: red; 
+	 text-align:center; 
+	 height:80px; 
+	 line-height:80px; 
+	 vertical-align:middle
+}
+#reg3{
+	text-align: center;
+	height: 225px;
+}
